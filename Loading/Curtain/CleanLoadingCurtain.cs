@@ -10,7 +10,7 @@ namespace Depra.Loading.Curtain
 {
 	public readonly struct CleanLoadingCurtain : ILoadingCurtain
 	{
-		async Task ILoadingCurtain.Load(IEnumerable<ILoadingOperation> operations, CancellationToken token)
+		public async Task Load(IEnumerable<ILoadingOperation> operations, CancellationToken token)
 		{
 			foreach (var operation in operations)
 			{

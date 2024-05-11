@@ -31,7 +31,7 @@ internal static class Mocks
 
 		OperationDescription ILoadingOperation.Description => new("Mock loading operation");
 
-		async Task ILoadingOperation.Load(Action<float> onProgress, CancellationToken cancellationToken)
+		async Task ILoadingOperation.Load(ProgressCallback onProgress, CancellationToken cancellationToken)
 		{
 			onProgress(0f);
 			IsStarted = true;

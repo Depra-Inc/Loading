@@ -8,13 +8,10 @@ namespace Depra.Loading.Operations
 	[Serializable]
 	public readonly struct OperationDescription
 	{
-		private const string DEFAULT_FORMAT = "Loading {0}...";
+		public static OperationDescription Default(string parameterName) => new($"Loading {parameterName}...");
 
-		public static OperationDescription Default(string parameterName) =>
-			new(string.Format(DEFAULT_FORMAT, parameterName));
+		public readonly string Text;
 
 		public OperationDescription(string text) => Text = text;
-
-		public string Text { get; }
 	}
 }

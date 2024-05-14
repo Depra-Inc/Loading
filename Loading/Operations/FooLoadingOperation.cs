@@ -12,11 +12,11 @@ namespace Depra.Loading.Operations
 		private readonly float _delay;
 		private readonly OperationDescription _description;
 
-		public FooLoadingOperation(float step = 0.1f, float delay = 0, OperationDescription description = default)
+		public FooLoadingOperation(OperationDescription description, float delay = 0, float step = 0.1f)
 		{
 			_step = step;
 			_delay = delay;
-			_description = description.Equals(default) ? OperationDescription.Default("Foo") : description;
+			_description = description;
 		}
 
 		OperationDescription ILoadingOperation.Description => _description;

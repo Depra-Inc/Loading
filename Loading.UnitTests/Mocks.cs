@@ -20,7 +20,7 @@ internal static class Mocks
 			}
 		}
 
-		void ILoadingCurtain.Unload() { }
+		Task ILoadingCurtain.Unload(CancellationToken cancellationToken) => Task.CompletedTask;
 	}
 
 	internal sealed class LoadingOperation : ILoadingOperation

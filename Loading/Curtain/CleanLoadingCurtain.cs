@@ -10,14 +10,14 @@ namespace Depra.Loading.Curtain
 {
 	public readonly struct CleanLoadingCurtain : ILoadingCurtain
 	{
-		public async Task Load(IEnumerable<ILoadingOperation> operations, CancellationToken token)
+		public async Task Load(IEnumerable<ILoadingOperation> operations, CancellationToken cancellationToken)
 		{
 			foreach (var operation in operations)
 			{
-				await operation.Load(_ => { }, token);
+				await operation.Load(_ => { }, cancellationToken);
 			}
 		}
 
-		void ILoadingCurtain.Unload() { }
+		Task ILoadingCurtain.Unload(CancellationToken cancellationToken) => Task.CompletedTask;
 	}
 }

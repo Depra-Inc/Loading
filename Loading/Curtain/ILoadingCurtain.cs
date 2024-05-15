@@ -10,14 +10,8 @@ namespace Depra.Loading.Curtain
 {
 	public interface ILoadingCurtain
 	{
-		Task Load(IEnumerable<ILoadingOperation> operations, CancellationToken cancellationToken = default);
+		Task Load(Queue<ILoadingOperation> operations, CancellationToken cancellationToken = default);
 
 		Task Unload(CancellationToken token = default);
-	}
-
-	public static class LoadingCurtainExtensions
-	{
-		public static Task Load(this ILoadingCurtain self, CancellationToken token = default,
-			params ILoadingOperation[] operations) => self.Load(operations, token);
 	}
 }

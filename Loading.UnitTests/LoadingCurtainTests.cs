@@ -17,7 +17,7 @@ internal sealed class LoadingCurtainTests
 	public async Task Load_ShouldCompleteTask_WhenLoadingOperationsIsEmpty()
 	{
 		// Arrange:
-		var operations = Enumerable.Empty<ILoadingOperation>();
+		var operations = new Queue<ILoadingOperation>();
 		var cancellationTokenSource = new CancellationTokenSource();
 		var cancellationToken = cancellationTokenSource.Token;
 

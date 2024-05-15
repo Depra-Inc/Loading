@@ -10,8 +10,7 @@ internal static class Mocks
 {
 	internal sealed class LoadingCurtain : ILoadingCurtain
 	{
-		async Task ILoadingCurtain.Load(IEnumerable<ILoadingOperation> operations,
-			CancellationToken cancellationToken)
+		async Task ILoadingCurtain.Load(Queue<ILoadingOperation> operations, CancellationToken cancellationToken)
 		{
 			foreach (var operation in operations)
 			{

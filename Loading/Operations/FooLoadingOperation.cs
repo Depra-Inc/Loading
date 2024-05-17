@@ -1,6 +1,7 @@
 ﻿// SPDX-License-Identifier: Apache-2.0
 // © 2023-2024 Nikolay Melnikov <n.melnikov@depra.org>
 
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -21,19 +22,19 @@ namespace Depra.Loading.Operations
 
 		OperationDescription ILoadingOperation.Description => _description;
 
-		async Task ILoadingOperation.Load(ProgressCallback onProgress, CancellationToken token)
+		async Task ILoadingOperation.Load(IProgress<float> progress, CancellationToken token)
 		{
-			onProgress(0);
+			progress.Report(0);
 
 			var elapsed = 0f;
 			while (elapsed < _delay)
 			{
 				elapsed += _step;
-				onProgress(elapsed / _delay);
+				progress.Report(elapsed / _delay);
 				await Task.Delay((int) (_step * 1000), token);
 			}
 
-			onProgress(1);
+			progress.Report(1);
 			await Task.CompletedTask;
 		}
 	}

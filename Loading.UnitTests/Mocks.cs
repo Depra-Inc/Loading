@@ -15,7 +15,7 @@ internal static class Mocks
 			foreach (var operation in operations)
 			{
 				cancellationToken.ThrowIfCancellationRequested();
-				await operation.Load(_ => { }, cancellationToken);
+				await operation.Load(new Progress<float>(), cancellationToken);
 			}
 		}
 
@@ -30,14 +30,14 @@ internal static class Mocks
 
 		OperationDescription ILoadingOperation.Description => new("Mock loading operation");
 
-		async Task ILoadingOperation.Load(ProgressCallback onProgress, CancellationToken cancellationToken)
+		async Task ILoadingOperation.Load(IProgress<float> progress, CancellationToken cancellationToken)
 		{
-			onProgress(0f);
+			progress.Report(0f);
 			IsStarted = true;
 
 			await Task.Delay(10, cancellationToken);
 
-			onProgress(1f);
+			progress.Report(1f);
 			IsCompleted = true;
 		}
 	}

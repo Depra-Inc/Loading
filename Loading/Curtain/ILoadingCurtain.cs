@@ -1,17 +1,16 @@
 ﻿// SPDX-License-Identifier: Apache-2.0
-// © 2023-2024 Nikolay Melnikov <n.melnikov@depra.org>
+// © 2023-2025 Nikolay Melnikov <n.melnikov@depra.org>
 
 using System.Collections.Generic;
 using System.Threading;
-using System.Threading.Tasks;
-using Depra.Loading.Operations;
+using Depra.Threading;
 
-namespace Depra.Loading.Curtain
+namespace Depra.Loading
 {
 	public interface ILoadingCurtain
 	{
-		Task Load(Queue<ILoadingOperation> operations, CancellationToken cancellationToken = default);
+		ITask Load(Queue<ILoadingOperation> operations, CancellationToken cancellationToken = default);
 
-		Task Unload(CancellationToken token = default);
+		ITask Unload(CancellationToken token = default);
 	}
 }

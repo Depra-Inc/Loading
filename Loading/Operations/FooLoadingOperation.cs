@@ -1,11 +1,12 @@
 ﻿// SPDX-License-Identifier: Apache-2.0
-// © 2023-2024 Nikolay Melnikov <n.melnikov@depra.org>
+// © 2023-2025 Nikolay Melnikov <n.melnikov@depra.org>
 
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Depra.Threading;
 
-namespace Depra.Loading.Operations
+namespace Depra.Loading
 {
 	public sealed class FooLoadingOperation : ILoadingOperation
 	{
@@ -22,7 +23,7 @@ namespace Depra.Loading.Operations
 
 		OperationDescription ILoadingOperation.Description => _description;
 
-		async Task ILoadingOperation.Load(IProgress<float> progress, CancellationToken token)
+		async ITask ILoadingOperation.Load(IProgress<float> progress, CancellationToken token)
 		{
 			progress.Report(0);
 

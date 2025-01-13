@@ -1,8 +1,7 @@
 // SPDX-License-Identifier: Apache-2.0
-// © 2023-2024 Nikolay Melnikov <n.melnikov@depra.org>
+// © 2023-2025 Nikolay Melnikov <n.melnikov@depra.org>
 
-using Depra.Loading.Curtain;
-using Depra.Loading.Operations;
+using Depra.Threading;
 
 namespace Depra.Loading.UnitTests;
 
@@ -25,7 +24,7 @@ internal sealed class LoadingCurtainTests
 		var task = _loadingCurtain.Load(operations, cancellationToken);
 
 		// Assert:
-		await Asserts.CompletesAsync(task);
+		await Asserts.CompletesAsync(task.AsTask());
 	}
 
 	[Test]
@@ -44,7 +43,7 @@ internal sealed class LoadingCurtainTests
 		var task = _loadingCurtain.Load(operations, cancellationToken);
 
 		// Assert:
-		await Asserts.CompletesAsync(task);
+		await Asserts.CompletesAsync(task.AsTask());
 		Assert.Multiple(() =>
 		{
 			Assert.That(operation1.IsStarted);
@@ -71,7 +70,7 @@ internal sealed class LoadingCurtainTests
 		cancellationTokenSource.Cancel();
 
 		// Assert:
-		var exception = Assert.ThrowsAsync<TaskCanceledException>(() => task);
+		var exception = Assert.ThrowsAsync<TaskCanceledException>(() => task.AsTask());
 		Assert.Multiple(() =>
 		{
 			Assert.That(operation1.IsStarted);

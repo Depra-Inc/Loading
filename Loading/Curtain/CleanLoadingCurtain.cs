@@ -1,17 +1,17 @@
 ﻿// SPDX-License-Identifier: Apache-2.0
-// © 2023-2024 Nikolay Melnikov <n.melnikov@depra.org>
+// © 2023-2025 Nikolay Melnikov <n.melnikov@depra.org>
 
 using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using Depra.Loading.Operations;
+using Depra.Threading;
 
-namespace Depra.Loading.Curtain
+namespace Depra.Loading
 {
 	public readonly struct CleanLoadingCurtain : ILoadingCurtain
 	{
-		async Task ILoadingCurtain.Load(Queue<ILoadingOperation> operations, CancellationToken cancellationToken)
+		async ITask ILoadingCurtain.Load(Queue<ILoadingOperation> operations, CancellationToken cancellationToken)
 		{
 			foreach (var operation in operations)
 			{
@@ -19,6 +19,6 @@ namespace Depra.Loading.Curtain
 			}
 		}
 
-		Task ILoadingCurtain.Unload(CancellationToken cancellationToken) => Task.CompletedTask;
+		ITask ILoadingCurtain.Unload(CancellationToken cancellationToken) => Task.CompletedTask.AsITask();
 	}
 }

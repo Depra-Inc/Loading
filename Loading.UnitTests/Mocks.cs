@@ -1,8 +1,7 @@
 ﻿// SPDX-License-Identifier: Apache-2.0
-// © 2023-2024 Nikolay Melnikov <n.melnikov@depra.org>
+// © 2023-2025 Nikolay Melnikov <n.melnikov@depra.org>
 
-using Depra.Loading.Curtain;
-using Depra.Loading.Operations;
+using Depra.Threading;
 
 namespace Depra.Loading.UnitTests;
 
@@ -10,7 +9,7 @@ internal static class Mocks
 {
 	internal sealed class LoadingCurtain : ILoadingCurtain
 	{
-		async Task ILoadingCurtain.Load(Queue<ILoadingOperation> operations, CancellationToken cancellationToken)
+		async ITask ILoadingCurtain.Load(Queue<ILoadingOperation> operations, CancellationToken cancellationToken)
 		{
 			foreach (var operation in operations)
 			{
@@ -19,18 +18,17 @@ internal static class Mocks
 			}
 		}
 
-		Task ILoadingCurtain.Unload(CancellationToken cancellationToken) => Task.CompletedTask;
+		ITask ILoadingCurtain.Unload(CancellationToken cancellationToken) => Task.CompletedTask.AsITask();
 	}
 
 	internal sealed class LoadingOperation : ILoadingOperation
 	{
 		public bool IsStarted { get; private set; }
-
 		public bool IsCompleted { get; private set; }
 
 		OperationDescription ILoadingOperation.Description => new("Mock loading operation");
 
-		async Task ILoadingOperation.Load(IProgress<float> progress, CancellationToken cancellationToken)
+		async ITask ILoadingOperation.Load(IProgress<float> progress, CancellationToken cancellationToken)
 		{
 			progress.Report(0f);
 			IsStarted = true;
